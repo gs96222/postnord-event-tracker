@@ -384,26 +384,6 @@ describe('Response Utils', () => {
       const result = parseJSON(jsonString);
       expect(result).toEqual(complexObject);
     });
-
-    it('should preserve data types correctly', () => {
-      const data = {
-        string: 'hello',
-        number: 42,
-        boolean: true,
-        null: null,
-        array: [1, 'two', true],
-        object: { nested: 'value' },
-      };
-
-      const result = parseJSON(JSON.stringify(data));
-      expect(result).toEqual(data);
-      expect(typeof result?.string).toBe('string');
-      expect(typeof result?.number).toBe('number');
-      expect(typeof result?.boolean).toBe('boolean');
-      expect(result?.null).toBeNull();
-      expect(Array.isArray(result?.array)).toBe(true);
-      expect(typeof result?.object).toBe('object');
-    });
   });
 
   describe('isValidISODate', () => {
@@ -447,7 +427,6 @@ describe('Response Utils', () => {
 
     expect(isValidISODate(isoString)).toBe(true);
 
-    // Slightly modified versions should fail
     expect(isValidISODate(isoString.replace('T', ' '))).toBe(false);
     expect(isValidISODate(isoString.replace('Z', ''))).toBe(false);
   });

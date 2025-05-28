@@ -10,21 +10,19 @@ jest.mock('uuid', () => ({
   v4: jest.fn(() => 'test-event-id-123'),
 }));
 
-// Type the mocked service functions
 const mockCreateEvent = createEvent as jest.MockedFunction<typeof createEvent>;
-const mockShippmentEventExist = shippmentEventExist as jest.MockedFunction<typeof shippmentEventExist>;
+const mockShippmentEventExist = shippmentEventExist as jest.MockedFunction<
+  typeof shippmentEventExist
+>;
 
-// Mock Date to return fixed timestamp
 const FIXED_DATE = '2025-05-26T20:17:31.464Z';
 const mockDate = new Date(FIXED_DATE);
 
 const dateSpy = jest.spyOn(global, 'Date').mockImplementation(() => mockDate);
 Date.now = jest.fn(() => mockDate.getTime());
 
-// Create a fixed timestamp to avoid timing issues
 const FIXED_TIMESTAMP = new Date(FIXED_DATE).toISOString();
 
-// Mock data
 const mockEvent: APIGatewayProxyEvent = {
   ...mockAPIGatewayEvent,
   body: JSON.stringify({
@@ -34,7 +32,6 @@ const mockEvent: APIGatewayProxyEvent = {
     details: 'Package picked up from sender',
   }),
   path: '/shipments/SHIP-123456/events',
-
 };
 
 const mockCreateEventRequest = {
@@ -119,7 +116,7 @@ describe('recordEvent handler', () => {
         ShipmentStatus.CREATED,
         ShipmentStatus.IN_TRANSIT,
         ShipmentStatus.OUT_FOR_DELIVERY,
-        ShipmentStatus.DELIVERED
+        ShipmentStatus.DELIVERED,
       ];
 
       for (const status of statuses) {

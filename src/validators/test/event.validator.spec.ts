@@ -7,7 +7,6 @@ import {
 } from '../../validators/event.validator';
 import { ShipmentStatus } from '../../models';
 
-// Mock Date for consistent testing
 const FIXED_DATE = new Date('2025-05-26T10:00:00.000Z');
 
 describe('Validators', () => {

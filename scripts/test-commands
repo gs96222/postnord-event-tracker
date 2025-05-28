@@ -1,0 +1,20 @@
+curl -X POST http://localhost:3000/shipments/GAURAV123/events \
+  -H "Content-Type: application/json" \
+  -d '{
+    "timestamp": "2025-05-25T10:00:00.000Z",
+    "status": "picked_up",
+    "location": "Stockholm",
+    "details": "Package created and ready for pickup"
+  }'
+
+
+  curl -X POST http://localhost:3000/shipments/GAURAV123/events \
+  -H "Content-Type: application/json" \
+  -d '{
+    "timestamp": "2025-05-25T10:00:00.000Z",
+    "status": "in_transit",
+    "location": "Stockholm",
+    "details": "Package created and ready for pickup"
+  }'
+
+  curl http://localhost:3000/shipments/GAURAV123/events

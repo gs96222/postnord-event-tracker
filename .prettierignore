@@ -1,0 +1,8 @@
+node_modules
+dist
+coverage
+.serverless
+.env
+*.log
+cdk/cdk.out
+cdk/node_modules

@@ -1,0 +1,46 @@
+[{
+        "shipmentId": "SHIP-DEV-001",
+        "id": "evt-001",
+        "timestamp": "2023-05-20T08:00:00.000Z",
+        "status": "created",
+        "location": "Stockholm Hub",
+        "details": "Package created and registered in system",
+        "createdAt": "2023-05-20T08:00:00.000Z"
+    },
+    {
+        "shipmentId": "SHIP-DEV-001",
+        "id": "evt-002",
+        "timestamp": "2023-05-20T10:30:00.000Z",
+        "status": "picked_up",
+        "location": "Stockholm Hub",
+        "details": "Package picked up from sender",
+        "createdAt": "2023-05-20T10:30:00.000Z"
+    },
+    {
+        "shipmentId": "SHIP-DEV-001",
+        "id": "evt-003",
+        "timestamp": "2023-05-20T14:15:00.000Z",
+        "status": "in_transit",
+        "location": "Gothenburg Facility",
+        "details": "Package in transit to destination",
+        "createdAt": "2023-05-20T14:15:00.000Z"
+    },
+    {
+        "shipmentId": "SHIP-DEV-002",
+        "id": "evt-004",
+        "timestamp": "2023-05-21T09:00:00.000Z",
+        "status": "created",
+        "location": "Oslo Hub",
+        "details": "International package created",
+        "createdAt": "2023-05-21T09:00:00.000Z"
+    },
+    {
+        "shipmentId": "SHIP-DEV-002",
+        "id": "evt-005",
+        "timestamp": "2023-05-21T16:45:00.000Z",
+        "status": "delivered",
+        "location": "Oslo Downtown",
+        "details": "Package successfully delivered to recipient",
+        "createdAt": "2023-05-21T16:45:00.000Z"
+    }
+]

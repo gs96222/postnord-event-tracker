@@ -1,0 +1,1 @@
+export * from  './aws.dynamo.service';

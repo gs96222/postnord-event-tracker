@@ -1,0 +1,88 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: PostNord Event Tracker API
+
+Globals:
+  Function:
+    Timeout: 30
+    Runtime: nodejs18.x
+    Environment:
+      Variables:
+        SHIPMENT_EVENTS_TABLE: !Ref ShipmentEventsTable
+        AWS_REGION: !Ref AWS::Region
+
+Resources:
+  # DynamoDB Table
+  ShipmentEventsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: shipment-events
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: shipmentId
+          AttributeType: S
+        - AttributeName: id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: shipmentId
+          KeyType: HASH
+        - AttributeName: id
+          KeyType: RANGE
+
+  # Lambda Functions
+  GetEventHistoryFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: postnord-get-event-history
+      CodeUri: .
+      Handler: dist/api/getEventHistory.handler
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /shipments/{shipmentId}/events
+            Method: GET
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: !Ref ShipmentEventsTable
+
+  GetLatestEventFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: postnord-get-latest-event
+      CodeUri: .
+      Handler: dist/api/getLatestEvent.handler
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /shipments/{shipmentId}/events/latest
+            Method: GET
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: !Ref ShipmentEventsTable
+
+  RecordEventFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: postnord-record-event
+      CodeUri: .
+      Handler: dist/api/recordEvent.handler
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /shipments/{shipmentId}/events
+            Method: POST
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref ShipmentEventsTable
+
+Outputs:
+  ApiGatewayApi:
+    Description: "API Gateway endpoint URL"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
+
+  ShipmentEventsTable:
+    Description: "DynamoDB table name"
+    Value: !Ref ShipmentEventsTable
